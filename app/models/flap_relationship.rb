@@ -1,0 +1,2 @@
+class FlapRelationship < ApplicationRecord
+end

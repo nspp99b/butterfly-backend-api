@@ -1,0 +1,2 @@
+class Flap < ApplicationRecord
+end
