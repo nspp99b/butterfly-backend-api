@@ -1,4 +1,4 @@
-class FlapsController < ApplicationController
+class Api::V1::FlapsController < ApplicationController
 
   def index
     @flaps = Flap.all.order(created_at: :desc)
@@ -8,12 +8,10 @@ class FlapsController < ApplicationController
   def create
     @flap = Flap.new(flap_params)
     if @flap.save
-      flash[:success] = "Flapped!"
       render json: @flap
     else
-      flash[:error] = 
-      redirect_to request.referrer
-  end
+      render json: { error: "Max char length is 250" }
+    end
   end
 
   def show
