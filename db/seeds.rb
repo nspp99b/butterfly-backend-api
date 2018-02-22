@@ -17,5 +17,5 @@ Flap.create(content: "Hung ten at popping Beach 90th", user_id: 3)
 Flap.create(content: "Ruled the lineup today", user_id: 4)
 
 Relationship.create(cause_id: 1, effect_id: 2)
-Relationship.create(cause_id: 2, effect_id: 3)
+Relationship.create(cause_id: 1, effect_id: 3)
 Relationship.create(cause_id: 3, effect_id: 4)
