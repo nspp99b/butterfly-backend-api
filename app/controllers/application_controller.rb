@@ -5,6 +5,15 @@ class ApplicationController < ActionController::API
     JWT.encode(payload, secret, algorithm)
   end
 
+  def login_user(email, password)
+    user = User.find_by(email: email)
+    if user && user.authenticate(password)
+      user
+    else
+      raise AuthError
+    end
+  end
+
   def authorize_user!
     if !current_user.present?
       render json: {error: 'No user id present'}
@@ -41,5 +50,11 @@ class ApplicationController < ActionController::API
 
   def algorithm
     "HS256"
+  end
+end
+
+class AuthError < StandardError
+  def initialize(msg="No user or invalid password")
+    super
   end
 end
