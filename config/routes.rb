@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   end
 
   post "/login", to: 'auth#login'
-  post '/logout', to: 'auth#logout'
   get '/current_user', to: 'auth#currentUser'
   post '/signup', to: 'auth#signup'
 
