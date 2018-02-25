@@ -25,6 +25,18 @@ class Flap < ApplicationRecord
     all_effects
   end
 
+  def count_all_effects
+    all_effects = [self.effects.count]
+    self.effects.each do |e|
+      if e.has_no_effects
+        all_effects << 0
+      else
+        all_effects << e.count_all_effects
+      end
+    end
+    all_effects.sum
+  end
+
   def create_causes_tree
     all_causes = {flap: self}
     if self.has_no_causes
@@ -33,6 +45,18 @@ class Flap < ApplicationRecord
       all_causes[:causes] = self.causes.map { |e| e.create_causes_tree }
     end
     all_causes
+  end
+
+  def count_all_causes
+    all_causes = [self.causes.count]
+    self.causes.each do |e|
+      if e.has_no_causes
+        all_causes << 0
+      else
+        all_causes << e.count_all_causes
+      end
+    end
+    all_causes.sum
   end
 
 end
