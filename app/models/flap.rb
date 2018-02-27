@@ -15,45 +15,56 @@ class Flap < ApplicationRecord
     self.causes.empty?
   end
 
-  def create_effects_tree
+  def to_json
+    user = self.user.to_json
+    fx = self.fx_count
+    if self.effects.size > 0
+      effects = self.effects.map {|e| e.to_json}
+    else
+      effects = []
+    end
+    { id: self.id, user: user, content: self.content, created_at: self.created_at, fx_count: fx, effects: effects }
+  end
+
+  def flap_with_children
     all_effects = {flap: self}
     if self.has_no_effects
       all_effects[:effects] = nil
     else
-      all_effects[:effects] = self.effects.map { |e| e.create_effects_tree }
+      all_effects[:effects] = self.effects.map { |e| e.flap_with_children }
     end
     all_effects
   end
 
-  def count_all_effects
+  def fx_count
     all_effects = [self.effects.count]
     self.effects.each do |e|
       if e.has_no_effects
         all_effects << 0
       else
-        all_effects << e.count_all_effects
+        all_effects << e.fx_count
       end
     end
     all_effects.sum
   end
 
-  def create_causes_tree
+  def flap_with_ancestors
     all_causes = {flap: self}
     if self.has_no_causes
       all_causes[:causes] = nil
     else
-      all_causes[:causes] = self.causes.map { |e| e.create_causes_tree }
+      all_causes[:causes] = self.causes.map { |e| e.flap_with_ancestors }
     end
     all_causes
   end
 
-  def count_all_causes
+  def cause_count
     all_causes = [self.causes.count]
     self.causes.each do |e|
       if e.has_no_causes
         all_causes << 0
       else
-        all_causes << e.count_all_causes
+        all_causes << e.cause_count
       end
     end
     all_causes.sum
