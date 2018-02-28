@@ -10,7 +10,7 @@ class AuthController < ApplicationController
       email: user.email,
       token: token }
     rescue AuthError => e
-      render json: { error: e.msg }, status: 401
+      render json: { error: e }, status: 401
     end
   end
 
