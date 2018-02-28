@@ -6,9 +6,9 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    user = User.find_by(id: params[:id])
-    flaps = user.flaps.map {|f| f.to_json}
-    render json: { user: user.to_json, flaps: flaps }
+    user = User.find(params[:id]).to_json
+    flaps = user.flaps.order(created_at: :desc).map { |f| f.to_json }
+    render json: { user: user, flaps: flaps }
   end
 
   # private

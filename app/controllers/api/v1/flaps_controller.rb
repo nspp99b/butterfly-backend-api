@@ -9,7 +9,7 @@ class Api::V1::FlapsController < ApplicationController
     # byebug
     flap = Flap.new(content: flap_params[:content], user_id: flap_params[:user_id])
     if flap.save
-      Relationship.create(cause_id: params[:parent], effect_id: flap.id) unless params[:parent] = "null"
+      Relationship.create(cause_id: params[:parent], effect_id: flap.id) unless params[:parent] === "null"
       flaps = Flap.all.order(created_at: :desc).map { |f| f.to_json }
       render json: flaps
     else
