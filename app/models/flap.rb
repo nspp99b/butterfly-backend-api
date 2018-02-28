@@ -7,6 +7,10 @@ class Flap < ApplicationRecord
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 250 }
 
+  def self.active_flaps
+    Flap.all.where(active: true)
+  end
+
   def has_no_effects
     self.effects.empty?
   end
@@ -23,7 +27,11 @@ class Flap < ApplicationRecord
     else
       effects = []
     end
-    { id: self.id, user: user, content: self.content, created_at: self.created_at, fx_count: fx, effects: effects }
+    if self.active
+      { id: self.id, user: user, content: self.content, created_at: self.created_at, fx_count: fx, effects: effects }
+    else
+      { id: self.id, user: {name:"--"}, content: "flap deleted", created_at: self.created_at, fx_count: fx, effects: effects }
+    end
   end
 
   def flap_with_children
