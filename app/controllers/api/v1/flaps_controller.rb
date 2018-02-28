@@ -8,8 +8,8 @@ class Api::V1::FlapsController < ApplicationController
   def create
     flap = Flap.new(flap_params)
     if flap.save
-      flap.to_json
-      render json: flap
+      flaps = Flap.all.order(created_at: :desc).map { |f| f.to_json }
+      render json: flaps
     else
       render json: { error: "Max char length is 250" }
     end
