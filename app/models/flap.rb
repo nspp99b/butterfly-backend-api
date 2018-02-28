@@ -21,6 +21,7 @@ class Flap < ApplicationRecord
 
   def to_json
     user = self.user.to_json
+    userId = self.user.id
     fx = self.fx_count
     if self.effects.size > 0
       effects = self.effects.map {|e| e.to_json}
@@ -30,7 +31,7 @@ class Flap < ApplicationRecord
     if self.active
       { id: self.id, user: user, content: self.content, created_at: self.created_at, fx_count: fx, effects: effects }
     else
-      { id: self.id, user: {name:"--"}, content: "flap deleted", created_at: self.created_at, fx_count: fx, effects: effects }
+      { id: self.id, user: {id: userId, name:"--"}, content: "flap deleted", created_at: self.created_at, fx_count: fx, effects: effects }
     end
   end
 

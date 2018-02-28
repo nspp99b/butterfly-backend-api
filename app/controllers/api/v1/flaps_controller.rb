@@ -20,6 +20,7 @@ class Api::V1::FlapsController < ApplicationController
   def update
     flap = Flap.find(params[:id])
     flap.active = !flap.active
+    flap.save
     flaps = Flap.all.order(created_at: :desc).map { |f| f.to_json }
     render json: flaps
   end
