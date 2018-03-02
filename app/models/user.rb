@@ -1,5 +1,12 @@
 class User < ApplicationRecord
   has_many :flaps
+  has_many :active_connections, class_name:  "Connection",
+                                foreign_key: "follower_id"
+  has_many :following, through: :active_connections, source: :followed
+  has_many :passive_connections, class_name:  "Connection",
+                                   foreign_key: "followed_id"
+  has_many :followers, through: :passive_connections, source: :follower
+
   before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 50 },
                     uniqueness: { case_sensitive: false }
