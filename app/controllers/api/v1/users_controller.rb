@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
 
   def index
-    users = User.all.order(:name).limit(30)
+    users = User.all.order(:name)
     render json: users
   end
 
@@ -11,6 +11,17 @@ class Api::V1::UsersController < ApplicationController
     render json: { user: user, flaps: flaps }
   end
 
+  def following
+    user = User.find(params[:id])
+    users = user.following.order(:name)
+    render json: users
+  end
+
+  def followers
+    user = User.find(params[:id])
+    users = user.followers.order(:name)
+    render json: users
+  end
   # private
   #
   # def user_params
