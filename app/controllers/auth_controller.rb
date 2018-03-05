@@ -4,11 +4,7 @@ class AuthController < ApplicationController
     begin
     user = login_user(params[:email], params[:password])
     token = issue_token({ 'user_id': user.id })
-    render json: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      token: token }
+    render json: { user: user.to_json, token: token }
     rescue AuthError => e
       render json: { error: e }, status: 401
     end
@@ -17,7 +13,7 @@ class AuthController < ApplicationController
   def currentUser
     user = current_user
     if user
-      render json: { id: user.id, name: user.name, email: user.email }
+      render json: user
     else
       render json: nil
     end
@@ -28,12 +24,7 @@ class AuthController < ApplicationController
     if user.save
       begin
         user = login_user(user_params[:email], user_params[:password])
-        render json: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          token: issue_token({'user_id': user.id})
-        }
+        render json: { user: user.to_json, token: issue_token({'user_id': user.id})}
       rescue AuthError => e
         render json: { error: e.msg }, status: 401
       end
