@@ -6,8 +6,8 @@ class Api::V1::ConnectionsController < ApplicationController
     render json: user
   end
 
-  def destroy
-    user = Connection.find(params[:id]).followed
+  def unfollow
+    user = Connection.find_by(connection_params).followed
     current_user.unfollow(user)
     render json: user
   end

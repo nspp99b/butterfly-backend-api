@@ -10,12 +10,12 @@ Rails.application.routes.draw do
       end
       resources :flaps, only: [:index, :create, :show, :update]
       resources :relationships, only: [:index, :create]
-      resources :connections, only: [:create, :destroy]
+      resources :connections, only: [:create]
+      post '/unfollow', to: 'connections#unfollow'
     end
   end
 
-  post "/login", to: 'auth#login'
+  post '/login', to: 'auth#login'
   get '/current_user', to: 'auth#currentUser'
   post '/signup', to: 'auth#signup'
-
 end
