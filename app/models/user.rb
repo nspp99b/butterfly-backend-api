@@ -18,7 +18,13 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   def to_json
-    { id: self.id, name: self.name }
+    {
+      id: self.id,
+      name: self.name,
+      email: self.email,
+      following: self.following.map {|f| f.id},
+      followers: self.followers.map {|f| f.id}
+    }
   end
 
   def follow(other_user)

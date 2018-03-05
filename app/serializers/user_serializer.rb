@@ -1,3 +1,14 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :email
+  has_many :following
+  has_many :followers
+
+  def followers
+    object.followers.map { |f| f.id }
+  end
+
+  def following
+    object.following.map { |f| f.id }
+  end
+
 end
