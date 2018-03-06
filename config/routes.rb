@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       end
       resources :flaps, only: [:index, :create, :show, :update]
       resources :relationships, only: [:index, :create]
-      resources :connections, only: [:create]
+      resources :connections, only: [:create, :index]
       post '/unfollow', to: 'connections#unfollow'
     end
   end
