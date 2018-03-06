@@ -22,6 +22,7 @@ class User < ApplicationRecord
       id: self.id,
       name: self.name,
       email: self.email,
+      image: self.image,
       following: self.following.map {|f| f.id},
       followers: self.followers.map {|f| f.id}
     }
