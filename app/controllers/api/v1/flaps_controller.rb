@@ -2,7 +2,7 @@ class Api::V1::FlapsController < ApplicationController
 
   def index
     user = current_user
-    flaps = user.feed.map { |f| f.to_json }
+    flaps = user.feed.order(created_at: :desc).map { |f| f.to_json }
     render json: flaps
   end
 

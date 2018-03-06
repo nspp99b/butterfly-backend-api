@@ -1,4 +1,5 @@
 class Flap < ApplicationRecord
+  include ActionView::Helpers::DateHelper
   belongs_to :user
   has_many :causing_relationships, class_name:  "Relationship", foreign_key: "cause_id"
   has_many :effects, through: :causing_relationships, source: :effect
@@ -29,9 +30,9 @@ class Flap < ApplicationRecord
       effects = []
     end
     if self.active
-      { id: self.id, user: user, content: self.content, created_at: self.created_at, fx_count: fx, effects: effects }
+      { id: self.id, user: user, content: self.content, created_at: time_ago_in_words(self.created_at) + ' ago', fx_count: fx, effects: effects }
     else
-      { id: self.id, user: {id: userId, name:"--"}, content: "flap deleted", created_at: self.created_at, fx_count: fx, effects: effects }
+      { id: self.id, user: {id: userId, name:"--"}, content: "flap deleted", created_at: time_ago_in_words(self.created_at) + ' ago', fx_count: fx, effects: effects }
     end
   end
 
