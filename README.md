@@ -25,7 +25,10 @@ tzinfo-data
 To get started with a development database:  
 
 rake db: create  
-rake db: migrate  
+rake db: migrate
+
+Then you're ready to start rails server:  
+rails s -p 3001 (recommending 3001 to keep 3000 open for front end).
 
 * Maintenance / Contribution
 This is a student project and as such is no longer actively maintained.  
