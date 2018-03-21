@@ -7,8 +7,10 @@ class Api::V1::ConnectionsController < ApplicationController
 
   def create
     conx = Connection.new(connection_params)
+    user = conx.followed
+    cu = current_user
     if conx.save
-      render json: conx
+      render json: { user: user.to_json, currentUser: cu.to_json }
     else
       render json: { error: "Connection must have follower and followed" }
     end
