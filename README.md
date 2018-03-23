@@ -13,17 +13,8 @@ Frontend repo is [here](https://github.com/nspp99b/butterfly-frontend)
 
 * System dependencies  
 active_model_serializers  
-bcrypt (~> 3.1.7)  
-byebug  
+bcrypt  
 jwt  
-listen (>= 3.0.5, < 3.2)  
-pg (~> 0.18)  
-puma (~> 3.7)  
-rack-cors  
-rails (~> 5.1.4)  
-spring  
-spring-watcher-listen (~> 2.0.0)  
-tzinfo-data
 
 * Database creation
 To get started with a development database:  
