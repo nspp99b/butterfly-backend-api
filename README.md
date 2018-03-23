@@ -1,8 +1,12 @@
-# README
+# BUTTERFLY
 
 Rails 5 API backend for BUTTERFLY social messaging application, currently configured for development environment and PostgreSQL development database.  
 
 To get started, clone the repo down, navigate into your clone directory, bundle install, then follow the below instructions to create and migrate the database.
+
+Frontend repo is [here](https://github.com/nspp99b/butterfly-frontend)
+
+[Demo](https://youtu.be/na1Eqad0zHw)
 
 * Ruby version  
 2.3.3
