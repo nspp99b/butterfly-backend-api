@@ -17,16 +17,16 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
-  def to_json
-    {
-      id: self.id,
-      name: self.name,
-      email: self.email,
-      image: self.image,
-      following: self.following.map {|f| f.id},
-      followers: self.followers.map {|f| f.id}
-    }
-  end
+  # def to_json
+  #   {
+  #     id: self.id,
+  #     name: self.name,
+  #     email: self.email,
+  #     image: self.image,
+  #     following: self.following.map {|f| f.id},
+  #     followers: self.followers.map {|f| f.id}
+  #   }
+  # end
 
   def follow(other_user)
     self.following << other_user

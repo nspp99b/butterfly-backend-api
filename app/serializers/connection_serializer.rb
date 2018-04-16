@@ -3,12 +3,12 @@ class ConnectionSerializer < ActiveModel::Serializer
   has_one :follower
   has_one :followed
 
-  def follower
-    object.follower.to_json
-  end
-
-  def followed
-    object.followed.to_json
-  end
+  # def follower
+  #   object.follower
+  # end
+  #
+  # def followed
+  #   object.followed
+  # end
 
 end
