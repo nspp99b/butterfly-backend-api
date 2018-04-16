@@ -28,8 +28,20 @@ class Api::V1::FlapsController < ApplicationController
   end
 
   def show
-    flap = Flap.find_by(id: params[:id]).to_json
-    render json: flap
+    @flap = Flap.find_by(id: params[:id])
+    render json: @flap, include: [
+      'user',
+      'effects',
+      'user.following',
+      'user.followers',
+      'effects.id',
+      'effects.content',
+      'effects.created_at',
+      'effects.user',
+      'effects.user.following',
+      'effects.user.followers',
+      'effects.fxc'
+    ]
   end
 
   private
