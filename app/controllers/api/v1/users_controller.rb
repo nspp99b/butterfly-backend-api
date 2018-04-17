@@ -6,9 +6,16 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    flaps = @user.flaps.order(created_at: :desc).map { |f| f.to_json }
-    render json: { @user, flaps: flaps }
+    user = User.find(params[:id])
+    flaps = user.flaps.order(created_at: :desc)
+    render json: user, include: [
+      'following',
+      'followers',
+      'flaps',
+      'flaps.user',
+      'flaps.effects',
+      'flaps.effects.user'
+    ]
   end
 
   def update

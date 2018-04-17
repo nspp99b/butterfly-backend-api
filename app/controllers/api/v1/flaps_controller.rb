@@ -2,8 +2,20 @@ class Api::V1::FlapsController < ApplicationController
 
   def index
     user = current_user
-    flaps = user.feed.order(created_at: :desc).map { |f| f.to_json }
-    render json: flaps
+    flaps = user.feed.order(created_at: :desc)
+    render json: flaps, include: [
+      'user',
+      'effects',
+      'user.following',
+      'user.followers',
+      'effects.id',
+      'effects.content',
+      'effects.created_at',
+      'effects.user',
+      'effects.user.following',
+      'effects.user.followers',
+      'effects.fxc'
+    ]
   end
 
   def create
@@ -11,8 +23,20 @@ class Api::V1::FlapsController < ApplicationController
     if flap.save
       Relationship.create(cause_id: params[:parent], effect_id: flap.id) unless params[:parent] === "null"
       user = current_user
-      flaps = user.feed.order(created_at: :desc).map { |f| f.to_json }
-      render json: flaps
+      flaps = user.feed.order(created_at: :desc)
+      render json: flaps, include: [
+        'user',
+        'effects',
+        'user.following',
+        'user.followers',
+        'effects.id',
+        'effects.content',
+        'effects.created_at',
+        'effects.user',
+        'effects.user.following',
+        'effects.user.followers',
+        'effects.fxc'
+      ]
     else
       render json: { error: "Max char length is 250" }
     end
@@ -23,8 +47,19 @@ class Api::V1::FlapsController < ApplicationController
     flap = Flap.find(params[:id])
     flap.active = !flap.active
     flap.save
-    flaps = user.feed.order(created_at: :desc).map { |f| f.to_json }
-    render json: flaps
+    render json: flap, include: [
+      'user',
+      'effects',
+      'user.following',
+      'user.followers',
+      'effects.id',
+      'effects.content',
+      'effects.created_at',
+      'effects.user',
+      'effects.user.following',
+      'effects.user.followers',
+      'effects.fxc'
+    ]
   end
 
   def show
