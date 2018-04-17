@@ -24,7 +24,7 @@ class FlapSerializer < ActiveModel::Serializer
     if object.active
       object.user
     else
-      {id: object.user.id, name:"--"}
+      {id: object.user.id, name:"--", image: "http://oakdome.com/k5/cartoons/cartoon-gallery/images/butterfly.png"}
     end
   end
 
