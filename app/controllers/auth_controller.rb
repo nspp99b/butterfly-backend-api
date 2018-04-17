@@ -4,7 +4,7 @@ class AuthController < ApplicationController
     begin
     user = login_user(params[:email], params[:password])
     token = issue_token({ 'user_id': user.id })
-    render json: { user: user.to_json, token: token }
+    render json: { user: UserSerializer.new(user), token: token }
     rescue AuthError => e
       render json: { error: e }, status: 401
     end
@@ -24,7 +24,7 @@ class AuthController < ApplicationController
     if user.save
       begin
         user = login_user(user_params[:email], user_params[:password])
-        render json: { user: user.to_json, token: issue_token({'user_id': user.id})}
+        render json: { user: UserSerializer.new(user), token: issue_token({'user_id': user.id})}
       rescue AuthError => e
         render json: { error: e.msg }, status: 401
       end
