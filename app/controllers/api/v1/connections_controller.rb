@@ -17,7 +17,14 @@ class Api::V1::ConnectionsController < ApplicationController
     @user = conx.followed
     @cu = current_user
     if conx.save
-      render json: conx
+      render json: conx, include:
+      ['follower',
+        'followed',
+        'follower.followers',
+        'follower.following',
+        'followed.followers',
+        'followed.following'
+      ]
     else
       render json: { error: "Connection must have follower and followed" }
     end
@@ -26,8 +33,8 @@ class Api::V1::ConnectionsController < ApplicationController
   def unfollow
     @user = Connection.find_by(connection_params).followed
     @cu = current_user
-    @cu.unfollow(user)
-    render json: { user: user.to_json, currentUser: cu.to_json }
+    @cu.unfollow(@user)
+    render json: { user: UserSerializer.new(@user), currentUser: UserSerializer.new(@cu) }
   end
 
   private

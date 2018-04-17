@@ -47,7 +47,8 @@ class Api::V1::FlapsController < ApplicationController
     flap = Flap.find(params[:id])
     flap.active = !flap.active
     flap.save
-    render json: flap, include: [
+    flaps = user.feed.order(created_at: :desc)
+    render json: flaps, include: [
       'user',
       'effects',
       'user.following',
@@ -63,8 +64,8 @@ class Api::V1::FlapsController < ApplicationController
   end
 
   def show
-    @flap = Flap.find_by(id: params[:id])
-    render json: @flap, include: [
+    flap = Flap.find_by(id: params[:id])
+    render json: flap, include: [
       'user',
       'effects',
       'user.following',
