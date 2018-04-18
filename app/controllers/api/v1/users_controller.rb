@@ -8,14 +8,10 @@ class Api::V1::UsersController < ApplicationController
   def show
     user = User.find(params[:id])
     flaps = user.flaps.order(created_at: :desc)
-    render json: user, include: [
-      'following',
-      'followers',
-      'flaps',
-      'flaps.user',
-      'flaps.effects',
-      'flaps.effects.user'
-    ]
+    render json: {
+      user: UserSerializer.new(user),
+      flaps: ActiveModel::Serializer::CollectionSerializer.new(flaps, each_serializer: FlapSerializer)
+    }
   end
 
   def update

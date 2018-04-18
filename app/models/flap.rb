@@ -1,5 +1,4 @@
 class Flap < ApplicationRecord
-  include ActionView::Helpers::DateHelper
   belongs_to :user
   has_many :causing_relationships, class_name:  "Relationship", foreign_key: "cause_id"
   has_many :effects, through: :causing_relationships, source: :effect
@@ -19,22 +18,6 @@ class Flap < ApplicationRecord
   def has_no_causes
     self.causes.empty?
   end
-
-  # def to_json
-  #   user = self.user.to_json
-  #   userId = self.user.id
-  #   fx = self.fx_count
-  #   if self.effects.size > 0
-  #     effects = self.effects.map {|e| e.to_json}
-  #   else
-  #     effects = []
-  #   end
-  #   if self.active
-  #     { id: self.id, user: user, content: self.content, created_at: time_ago_in_words(self.created_at) + ' ago', fx_count: fx, effects: effects }
-  #   else
-  #     { id: self.id, user: {id: userId, name:"--"}, content: "flap deleted", created_at: time_ago_in_words(self.created_at) + ' ago', fx_count: fx, effects: effects }
-  #   end
-  # end
 
   def flap_with_children
     all_effects = {flap: self}
